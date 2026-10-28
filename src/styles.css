@@ -1,0 +1,221 @@
+:root{
+  --red:#B8302A;
+  --ink:#000;
+  --paper:#fff;
+  --stone:#EDEBE8;
+  --mute:#5E5A57;
+  --line:#D9D5D1;
+  --head:"Unbounded","Arial Black",sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --wrap:1240px;
+  --gut:clamp(16px,4vw,40px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gut)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* Фірмова плашка */
+.plate{display:inline;background:var(--red);color:#fff;padding:.02em .18em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+
+h1,h2{font-family:var(--head);font-weight:900;text-transform:uppercase;overflow-wrap:break-word;hyphens:auto}
+h2{font-size:clamp(28px,4vw,48px);line-height:1.05;letter-spacing:-.03em}
+
+/* Кнопки */
+.btn{display:inline-flex;align-items:center;justify-content:center;font:600 15px var(--body);text-decoration:none;padding:12px 20px;border:2px solid var(--ink);background:var(--ink);color:#fff;cursor:pointer}
+.btn:hover{background:var(--red);border-color:var(--red)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+
+/* Шапка */
+.site-head{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:2px solid var(--ink)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:24px;height:72px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo > span:last-child{font:700 18px var(--head);letter-spacing:-.02em}
+.mark{flex:none;border-radius:50%;border:3px solid var(--red);display:grid;place-items:center;font:900 9.5px/.92 var(--head);text-align:center;letter-spacing:-.02em}
+.mark b{display:block;color:var(--red)}
+.mark b:last-child{color:var(--ink)}
+.site-head nav ul{display:flex;gap:32px;list-style:none}
+.site-head nav a{text-decoration:none;font-weight:500;font-size:15px;padding:6px 0;border-bottom:2px solid transparent}
+.site-head nav a:hover{color:var(--red)}
+.site-head nav a.active{border-bottom-color:var(--red)}
+.menu-btn{display:none;background:none;border:0;font:600 15px var(--body);cursor:pointer;padding:8px 0}
+@media (max-width:860px){
+  .site-head nav{display:none;position:absolute;top:72px;left:0;right:0;background:var(--paper);border-bottom:2px solid var(--ink)}
+  .site-head nav.open{display:block}
+  .site-head nav ul{flex-direction:column;gap:0;padding:8px var(--gut) 16px}
+  .site-head nav a{display:block;padding:14px 0;border-bottom:1px solid var(--line)}
+  .site-head nav a.active{color:var(--red);border-bottom-color:var(--line)}
+  .menu-btn{display:block}
+  .head-cta{display:none}
+}
+
+/* Секції */
+section{padding:clamp(56px,8vw,96px) 0}
+section.tight{padding-top:clamp(32px,4vw,48px)}
+.band{background:var(--stone);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:32px;flex-wrap:wrap}
+.see-all{font-weight:600;text-decoration:none;border-bottom:2px solid var(--red);padding-bottom:2px}
+.see-all:hover{color:var(--red)}
+.sub-h{font-size:clamp(22px,2.6vw,30px);margin-bottom:24px}
+.past-h{margin-top:64px;color:var(--mute)}
+.empty{color:var(--mute);padding:32px 0;border-top:2px solid var(--ink)}
+
+/* Перший екран */
+.hero{padding:clamp(48px,9vw,120px) 0 clamp(40px,6vw,72px);border-bottom:2px solid var(--ink)}
+.hero h1{font-size:clamp(38px,7.4vw,104px);line-height:1.02;letter-spacing:-.035em;max-width:14ch}
+.hero h1 .plate{line-height:1.12}
+.hero-foot{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;margin-top:clamp(32px,5vw,56px)}
+.hero-foot p{font-size:clamp(18px,1.7vw,21px);max-width:46ch;color:var(--mute)}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+@media (max-width:720px){.hero-foot{grid-template-columns:1fr}}
+
+/* Шапка сторінки розділу */
+.page-head{padding:clamp(48px,7vw,96px) 0 0}
+.page-head h1{font-size:clamp(44px,8vw,112px);line-height:1;letter-spacing:-.04em}
+.page-head p{color:var(--mute);font-size:clamp(18px,1.7vw,21px);margin-top:20px;max-width:52ch}
+.page-head .btn{margin-top:28px}
+
+/* Фільтр */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.filters button{font:500 14px var(--body);padding:8px 14px;border:1.5px solid var(--ink);background:transparent;cursor:pointer;color:var(--ink)}
+.filters button:hover{border-color:var(--red);color:var(--red)}
+.filters button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* Заглушки фото */
+.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tone-a{background:radial-gradient(120% 90% at 70% 10%,#5b6b74 0,#26313a 55%,#0d1216 100%)}
+.tone-b{background:radial-gradient(120% 90% at 30% 20%,#8a6a4e 0,#3d2c22 55%,#140d0a 100%)}
+.tone-c{background:radial-gradient(120% 90% at 60% 20%,#c0473c 0,#5a1714 55%,#1a0605 100%)}
+.tone-d{background:radial-gradient(120% 90% at 40% 10%,#6f7a5a 0,#2c3324 55%,#0e110b 100%)}
+.tone-e{background:radial-gradient(120% 90% at 70% 30%,#4a4f6b 0,#202336 55%,#0a0b12 100%)}
+.tone-f{background:radial-gradient(120% 90% at 50% 10%,#9a9188 0,#45403b 55%,#141210 100%)}
+
+/* Новини: сітка карток */
+.feed{display:grid;grid-template-columns:repeat(12,1fr);gap:2px;background:var(--ink);border:2px solid var(--ink)}
+.card{grid-column:span 4;position:relative;min-height:400px;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;color:#fff;text-decoration:none;overflow:hidden;background:#1a1a1a}
+.card.lead{grid-column:span 8;min-height:540px}
+.card::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,0) 25%,rgba(0,0,0,.92) 78%)}
+.card > *:not(.ph){position:relative;z-index:2}
+.card .rub{font-size:13px;font-weight:500;opacity:.8;margin-bottom:12px}
+.card h3{font:900 clamp(19px,1.9vw,24px)/1.12 var(--head);text-transform:uppercase;letter-spacing:-.02em;overflow-wrap:anywhere}
+.card.lead h3{font-size:clamp(26px,3.4vw,44px)}
+.card h3 .plate{line-height:1.25}
+.card p{font-size:15px;line-height:1.45;margin-top:12px;opacity:.88;max-width:52ch}
+.card time{font-size:13px;opacity:.6;margin-top:14px}
+.card:hover h3{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:5px}
+/* Добиваємо останній ряд, щоб не було дірок */
+@media (min-width:1001px){
+  .card.lead ~ .card:last-child:nth-child(3n){grid-column:span 12;min-height:320px}
+  .card.lead ~ .card:nth-child(3n):nth-last-child(2),.card.lead ~ .card:nth-child(3n+1):last-child{grid-column:span 6}
+}
+@media (max-width:1000px){.card,.card.lead{grid-column:span 6}.card.lead{min-height:440px}.feed > .card:last-child:nth-child(odd){grid-column:span 12;min-height:320px}}
+@media (max-width:640px){.card,.card.lead{grid-column:span 12;min-height:340px}}
+
+/* Події */
+.ev-list{border-top:2px solid var(--ink)}
+.ev{display:grid;grid-template-columns:120px minmax(0,1fr) 220px;gap:32px;align-items:start;padding:28px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.band .ev{border-bottom-color:#cfcac5}
+.ev-date strong{display:block;font:900 56px/.9 var(--head);letter-spacing:-.04em;color:var(--red)}
+.ev-date span{font-weight:600;font-size:15px}
+.ev .tag{font-size:13px;font-weight:600;color:var(--red)}
+.ev h3{font:700 clamp(20px,2.2vw,26px)/1.2 var(--head);letter-spacing:-.02em;margin:6px 0 8px}
+.ev p{color:var(--mute)}
+.ev-meta{display:flex;flex-direction:column;gap:2px;font-size:15px;color:var(--mute)}
+.ev-meta span:first-child{color:var(--ink);font-weight:600}
+.ev:hover h3{color:var(--red)}
+.ev.past .ev-date strong{color:var(--mute)}
+@media (max-width:760px){
+  .ev{grid-template-columns:72px minmax(0,1fr);gap:16px}
+  .ev-date strong{font-size:38px}
+  .ev-meta{grid-column:2;flex-direction:row;flex-wrap:wrap;gap:4px 12px}
+}
+
+/* Блоги */
+.posts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,40px)}
+.post{text-decoration:none;display:flex;flex-direction:column}
+.post-img{position:relative;aspect-ratio:4/3;overflow:hidden;margin-bottom:18px;border:2px solid var(--ink)}
+.post-by{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--mute);margin-bottom:10px}
+.post-by b{color:var(--ink);font-weight:600}
+.ava{flex:none;width:34px;height:34px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font:700 14px var(--head)}
+.post h3{font:700 clamp(20px,1.9vw,24px)/1.2 var(--head);letter-spacing:-.02em;margin-bottom:10px}
+.post p{color:var(--mute);font-size:16px}
+.post-meta{font-size:13px;color:var(--mute);margin-top:12px}
+.post:hover h3{color:var(--red)}
+@media (max-width:900px){.posts{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.posts{grid-template-columns:1fr}}
+
+/* Політв'язні */
+.prisoners{background:var(--ink);color:#fff}
+.prisoners h2{max-width:18ch}
+.lead-txt{color:#bdb8b3;max-width:56ch;margin-top:18px}
+.counter{font:900 clamp(80px,16vw,220px)/.9 var(--head);letter-spacing:-.05em;color:var(--red);margin:40px 0 12px}
+.counter-note{color:#bdb8b3;font-size:15px;max-width:52ch}
+.prisoners .cta{margin-top:32px}
+.prisoners .btn{background:var(--red);border-color:var(--red)}
+.prisoners .btn:hover{background:#fff;color:var(--ink);border-color:#fff}
+
+/* Сторінка матеріалу */
+.art-head{position:relative;background:#111;color:#fff;padding:clamp(80px,14vw,200px) 0 clamp(36px,5vw,56px);overflow:hidden}
+.art-head::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,.2) 0,rgba(0,0,0,.9) 85%)}
+.art-head .wrap{position:relative;z-index:2}
+.art-head h1,.blog-head h1{font-size:clamp(30px,5vw,64px);line-height:1.06;letter-spacing:-.03em;max-width:20ch}
+.art-head h1 .plate{line-height:1.2}
+.crumb{display:inline-block;font-size:14px;font-weight:600;text-decoration:none;margin-bottom:18px;border-bottom:2px solid var(--red)}
+.art-lead{font-size:clamp(18px,1.8vw,22px);max-width:52ch;margin-top:20px;opacity:.9}
+.art-head time{display:block;margin-top:16px;font-size:14px;opacity:.65}
+.blog-head{padding:clamp(48px,7vw,96px) 0 clamp(32px,4vw,48px);border-bottom:2px solid var(--ink)}
+.blog-head h1{text-transform:none;font-weight:700}
+.blog-head .art-lead{color:var(--mute);opacity:1}
+.post-by.big{margin:28px 0 0;font-size:15px;line-height:1.45}
+.post-by.big .ava{width:48px;height:48px;font-size:18px}
+.prose{max-width:68ch;padding:clamp(36px,5vw,56px) 0}
+.prose p{font-size:19px;line-height:1.7;margin-bottom:1.1em}
+.ev-detail{padding-bottom:clamp(48px,7vw,96px);display:grid;grid-template-columns:280px minmax(0,1fr);gap:clamp(32px,6vw,80px);align-items:start}
+.facts{margin-top:clamp(36px,5vw,56px);border-top:2px solid var(--ink)}
+.facts div{padding:14px 0;border-bottom:1px solid var(--line)}
+.facts dt{font-size:13px;color:var(--mute)}
+.facts dd{font-weight:600}
+.facts .btn{margin-top:20px;width:100%}
+.past-note{display:block;margin-top:20px;color:var(--mute)}
+@media (max-width:760px){.ev-detail{grid-template-columns:1fr;gap:0}}
+
+/* Про нас */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:clamp(32px,6vw,96px)}
+.about-lead{font:500 clamp(22px,2.4vw,30px)/1.35 var(--body)}
+.about p{max-width:58ch}
+.values{list-style:none;margin-top:28px;border-top:2px solid var(--ink)}
+.values li{padding:16px 0;border-bottom:1px solid var(--line)}
+.values b{font-family:var(--head);font-weight:700;margin-right:6px}
+@media (max-width:860px){.about{grid-template-columns:1fr}}
+
+/* Підписка */
+.sub{background:var(--red);color:#fff}
+.sub-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+.sub p{opacity:.9;margin-top:14px;max-width:44ch}
+.sub form{display:flex;border:2px solid #fff}
+.sub input{flex:1;min-width:0;font:400 16px var(--body);padding:16px;border:0;background:transparent;color:#fff}
+.sub input::placeholder{color:rgba(255,255,255,.75)}
+.sub button{font:600 15px var(--body);padding:0 22px;border:0;background:#fff;color:var(--ink);cursor:pointer}
+.sub button:hover{background:var(--ink);color:#fff}
+.sub .ok{margin-top:12px;font-size:15px;min-height:1.5em}
+@media (max-width:860px){.sub-in{grid-template-columns:minmax(0,1fr)}}
+
+/* Підвал */
+.site-foot{background:var(--ink);color:#fff;padding:56px 0 32px}
+.f-top{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px;padding-bottom:40px;border-bottom:1px solid #333}
+.site-foot h4{font:700 14px var(--head);margin-bottom:14px}
+.site-foot ul{list-style:none}
+.site-foot li{margin-bottom:8px}
+.site-foot a{text-decoration:none;color:#cfcac5}
+.site-foot a:hover{color:#fff}
+.f-mark{font:900 30px/.92 var(--head);letter-spacing:-.03em}
+.f-mark b{color:var(--red);display:block}
+.f-top p{color:#a7a29d;font-size:15px;margin-top:16px;max-width:30ch}
+.f-bot{display:flex;justify-content:space-between;gap:16px;padding-top:24px;font-size:14px;color:#8f8a85;flex-wrap:wrap}
+@media (max-width:860px){.f-top{grid-template-columns:1fr 1fr}}
