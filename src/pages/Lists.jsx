@@ -1,6 +1,20 @@
+import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { news, events, blogs, NEWS_RUBRICS, isUpcoming } from '../data'
 import { NewsCard, EventRow, BlogCard } from '../components/Cards'
+
+const PAGE = 12
+
+// Показує список частинами по PAGE штук з кнопкою «Показати ще»
+function useMore(list, resetKey) {
+  const [state, setState] = useState({ key: resetKey, n: PAGE })
+  const n = state.key === resetKey ? state.n : PAGE
+  return [list.slice(0, n), n < list.length, () => setState({ key: resetKey, n: n + PAGE })]
+}
+
+function More({ onClick }) {
+  return <div className="more"><button className="btn ghost" onClick={onClick}>Показати ще</button></div>
+}
 
 function PageHead({ title, text }) {
   return (
@@ -18,6 +32,7 @@ export function NewsPage() {
   const r = params.get('r') || 'all'
   const list = r === 'all' ? news : news.filter(n => n.rubric === r)
   const tabs = [['all', 'Усе'], ...Object.entries(NEWS_RUBRICS)]
+  const [shown, hasMore, more] = useMore(list, r)
 
   return (
     <>
@@ -34,8 +49,9 @@ export function NewsPage() {
             ))}
           </div>
           {list.length
-            ? <div className="feed">{list.map((n, i) => <NewsCard key={n.slug} item={n} size={i === 0 ? 'lead' : ''} />)}</div>
+            ? <div className="feed">{shown.map((n, i) => <NewsCard key={n.slug} item={n} size={i === 0 ? 'lead' : ''} />)}</div>
             : <p className="empty">У цій рубриці ще немає матеріалів.</p>}
+          {hasMore && <More onClick={more} />}
         </div>
       </section>
     </>
@@ -45,6 +61,7 @@ export function NewsPage() {
 export function EventsPage() {
   const upcoming = events.filter(e => isUpcoming(e.date)).sort((a, b) => a.date.localeCompare(b.date))
   const past = events.filter(e => !isUpcoming(e.date)).sort((a, b) => b.date.localeCompare(a.date))
+  const [pastShown, hasMore, more] = useMore(past, 'past')
 
   return (
     <>
@@ -58,7 +75,8 @@ export function EventsPage() {
 
           {past.length > 0 && <>
             <h2 className="sub-h past-h">Минулі</h2>
-            <div className="ev-list">{past.map(e => <EventRow key={e.slug} item={e} past />)}</div>
+            <div className="ev-list">{pastShown.map(e => <EventRow key={e.slug} item={e} past />)}</div>
+            {hasMore && <More onClick={more} />}
           </>}
         </div>
       </section>
@@ -67,12 +85,14 @@ export function EventsPage() {
 }
 
 export function BlogPage() {
+  const [shown, hasMore, more] = useMore(blogs, 'blogs')
   return (
     <>
       <PageHead title="Блоги" text="Авторські колонки: кримчани, історики, митці та люди з окупованого півострова." />
       <section className="tight">
         <div className="wrap">
-          <div className="posts">{blogs.map(b => <BlogCard key={b.slug} item={b} />)}</div>
+          <div className="posts">{shown.map(b => <BlogCard key={b.slug} item={b} />)}</div>
+          {hasMore && <More onClick={more} />}
         </div>
       </section>
     </>

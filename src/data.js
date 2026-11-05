@@ -1,6 +1,10 @@
-// Увесь контент сайту. Щоб додати матеріал — допишіть об'єкт у відповідний масив.
-// Пізніше цей файл можна замінити на запити до CMS (Strapi, Sanity, WordPress API тощо).
-// img: шлях до фото (наприклад '/img/news-1.jpg'). Поки фото немає — показується кольорова заглушка tone.
+// Контент сайту.
+// Основне джерело — Instagram: scripts/fetch-instagram.mjs щогодини складає src/content/instagram.json.
+// Нижче — матеріали, які додаються вручну (те, чого немає в Instagram), і демо-контент,
+// який показується лише тоді, коли даних з Instagram ще немає (наприклад, локально без токена).
+// img: шлях до фото відносно public/, без скісної риски на початку: 'img/news-1.jpg'.
+
+import instagram from './content/instagram.json'
 
 export const NEWS_RUBRICS = {
   news: 'Новини',
@@ -9,7 +13,7 @@ export const NEWS_RUBRICS = {
   culture: 'Культура',
 }
 
-export const news = [
+const demoNews = [
   {
     slug: 'avtonomiia-u-srsr',
     rubric: 'history',
@@ -75,7 +79,7 @@ export const news = [
   },
 ]
 
-export const events = [
+const demoEvents = [
   {
     slug: 'za-perekopom-premiera',
     date: '2026-10-29',
@@ -130,7 +134,7 @@ export const events = [
   },
 ]
 
-export const blogs = [
+const demoBlogs = [
   {
     slug: 'shcho-ia-obozhniuiu',
     date: '2026-10-20',
@@ -168,6 +172,19 @@ export const blogs = [
     body: ['Текст колонки.'],
   },
 ]
+
+// Матеріали, додані вручну. Формат такий самий, як у демо вище.
+const manualNews = []
+const manualEvents = []
+const manualBlogs = []
+
+const live = instagram.news.length + instagram.events.length + instagram.blogs.length > 0
+const byDateDesc = (a, b) => b.date.localeCompare(a.date)
+
+export const news = [...manualNews, ...(live ? instagram.news : demoNews)].sort(byDateDesc)
+export const events = [...manualEvents, ...(live ? instagram.events : demoEvents)].sort(byDateDesc)
+export const blogs = [...manualBlogs, ...(live ? instagram.blogs : demoBlogs)].sort(byDateDesc)
+export const fetchedAt = instagram.fetchedAt
 
 const MONTHS = ['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня']
 export function fmtDate(iso) {

@@ -1,12 +1,22 @@
 name: Deploy
+
 on:
   push:
     branches: [main]
+  schedule:
+    # щогодини о :17 — підтягнути нові пости з Instagram
+    - cron: '17 * * * *'
   workflow_dispatch:
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,12 +24,55 @@ jobs:
       name: github-pages
     steps:
       - uses: actions/checkout@v5
+
       - uses: actions/setup-node@v5
         with:
           node-version: 24
+
       - run: npm install
+
+      # Фото з Instagram зберігаються між запусками, щоб не качати їх щоразу
+      - name: Restore Instagram photos
+        uses: actions/cache/restore@v4
+        with:
+          path: public/ig
+          key: ig-photos-${{ github.run_id }}
+          restore-keys: ig-photos-
+
+      - name: Fetch Instagram posts
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_NEW_TOKEN_FILE: ${{ runner.temp }}/ig_token
+          EVENT: ${{ github.event_name }}
+        run: |
+          # раз на добу (нічний запуск о 03:17 UTC) продовжуємо токен ще на 60 днів
+          if [ "$EVENT" = "schedule" ] && [ "$(date -u +%H)" = "03" ]; then export IG_REFRESH=1; fi
+          node scripts/fetch-instagram.mjs
+
+      - name: Save renewed token
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          f="${{ runner.temp }}/ig_token"
+          if [ -s "$f" ] && [ -n "$GH_TOKEN" ]; then
+            echo "::add-mask::$(cat "$f")"
+            gh secret set IG_TOKEN --repo "${{ github.repository }}" < "$f"
+            echo "IG_TOKEN оновлено"
+          elif [ -s "$f" ]; then
+            echo "::warning::Токен Instagram продовжено, але GH_PAT не задано — новий токен не збережено. Див. README."
+          fi
+
+      - name: Save Instagram photos
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: public/ig
+          key: ig-photos-${{ github.run_id }}
+
       - run: npm run build
+
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
+
       - uses: actions/deploy-pages@v4
