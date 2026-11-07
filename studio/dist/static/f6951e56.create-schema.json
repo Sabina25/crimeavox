@@ -1,0 +1,808 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 160
+              }
+            ]
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Заголовок"
+      },
+      {
+        "description": "Частина заголовка, яка буде на червоній плашці. Наприклад: заголовок «270 наших людей», виділення «вдома». Можна залишити порожнім.",
+        "name": "accent",
+        "type": "string",
+        "title": "Виділити червоним"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "description": "Натисніть «Generate», щоб створити з заголовка.",
+        "name": "slug",
+        "type": "slug",
+        "title": "Адреса сторінки"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Новини",
+              "value": "news"
+            },
+            {
+              "title": "Права людини",
+              "value": "rights"
+            },
+            {
+              "title": "Історія",
+              "value": "history"
+            },
+            {
+              "title": "Культура",
+              "value": "culture"
+            }
+          ],
+          "layout": "radio",
+          "direction": "horizontal"
+        },
+        "initialValue": "news",
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "news",
+                  "rights",
+                  "history",
+                  "culture"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "rubric",
+        "type": "string",
+        "title": "Рубрика"
+      },
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "date",
+        "type": "date",
+        "title": "Дата публікації"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "name": "alt",
+            "type": "string",
+            "title": "Опис фото (для незрячих)"
+          }
+        ],
+        "name": "image",
+        "type": "image",
+        "title": "Фото"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 300
+              }
+            ]
+          }
+        ],
+        "description": "Одне-два речення під заголовком. Показується в картці.",
+        "name": "lead",
+        "type": "text",
+        "title": "Короткий опис"
+      },
+      {
+        "of": [
+          {
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Список"
+              },
+              {
+                "value": "number",
+                "title": "Нумерований"
+              }
+            ],
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "level": "error",
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object",
+                  "title": "Посилання"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Жирний"
+                },
+                {
+                  "value": "em",
+                  "title": "Курсив"
+                }
+              ]
+            },
+            "of": [],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Звичайний"
+              },
+              {
+                "value": "h2",
+                "title": "Підзаголовок"
+              },
+              {
+                "value": "h3",
+                "title": "Малий підзаголовок"
+              },
+              {
+                "value": "blockquote",
+                "title": "Цитата"
+              }
+            ],
+            "type": "block"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "fields": [
+              {
+                "name": "alt",
+                "type": "string",
+                "title": "Опис фото"
+              },
+              {
+                "name": "caption",
+                "type": "string",
+                "title": "Підпис"
+              }
+            ],
+            "type": "image",
+            "title": "Фото"
+          }
+        ],
+        "name": "body",
+        "type": "array",
+        "title": "Текст"
+      }
+    ],
+    "name": "news",
+    "type": "document",
+    "title": "Новини"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 160
+              }
+            ]
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Заголовок"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "description": "Натисніть «Generate», щоб створити з заголовка.",
+        "name": "slug",
+        "type": "slug",
+        "title": "Адреса сторінки"
+      },
+      {
+        "options": {
+          "list": [
+            "Вистава",
+            "Кінопоказ",
+            "Запис подкасту",
+            "Лекція",
+            "Дискусія",
+            "Презентація",
+            "Концерт",
+            "Виставка",
+            "Акція",
+            "Зустріч"
+          ]
+        },
+        "initialValue": "Зустріч",
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "Вистава",
+                  "Кінопоказ",
+                  "Запис подкасту",
+                  "Лекція",
+                  "Дискусія",
+                  "Презентація",
+                  "Концерт",
+                  "Виставка",
+                  "Акція",
+                  "Зустріч"
+                ]
+              }
+            ]
+          }
+        ],
+        "name": "type",
+        "type": "string",
+        "title": "Тип події"
+      },
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "date",
+        "type": "date",
+        "title": "Дата події"
+      },
+      {
+        "validation": [
+          {
+            "level": "warning",
+            "rules": [
+              {
+                "flag": "regex",
+                "constraint": {
+                  "pattern": "/^([01]?\\d|2[0-3]):[0-5]\\d$/",
+                  "name": "час",
+                  "invert": false
+                }
+              }
+            ],
+            "message": "Формат: 19:00"
+          }
+        ],
+        "description": "Наприклад: 19:00",
+        "name": "time",
+        "type": "string",
+        "title": "Час"
+      },
+      {
+        "initialValue": "Київ",
+        "name": "city",
+        "type": "string",
+        "title": "Місто"
+      },
+      {
+        "description": "Наприклад: Театр Лесі Українки",
+        "name": "place",
+        "type": "string",
+        "title": "Місце"
+      },
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "name": "link",
+        "type": "url",
+        "title": "Посилання на реєстрацію або квитки"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "name": "alt",
+            "type": "string",
+            "title": "Опис фото (для незрячих)"
+          }
+        ],
+        "name": "image",
+        "type": "image",
+        "title": "Фото"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 300
+              }
+            ]
+          }
+        ],
+        "description": "Одне-два речення під заголовком. Показується в картці.",
+        "name": "lead",
+        "type": "text",
+        "title": "Короткий опис"
+      },
+      {
+        "of": [
+          {
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Список"
+              },
+              {
+                "value": "number",
+                "title": "Нумерований"
+              }
+            ],
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "level": "error",
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object",
+                  "title": "Посилання"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Жирний"
+                },
+                {
+                  "value": "em",
+                  "title": "Курсив"
+                }
+              ]
+            },
+            "of": [],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Звичайний"
+              },
+              {
+                "value": "h2",
+                "title": "Підзаголовок"
+              },
+              {
+                "value": "h3",
+                "title": "Малий підзаголовок"
+              },
+              {
+                "value": "blockquote",
+                "title": "Цитата"
+              }
+            ],
+            "type": "block"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "fields": [
+              {
+                "name": "alt",
+                "type": "string",
+                "title": "Опис фото"
+              },
+              {
+                "name": "caption",
+                "type": "string",
+                "title": "Підпис"
+              }
+            ],
+            "type": "image",
+            "title": "Фото"
+          }
+        ],
+        "name": "body",
+        "type": "array",
+        "title": "Текст"
+      }
+    ],
+    "name": "event",
+    "type": "document",
+    "title": "Події"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "max",
+                "constraint": 160
+              }
+            ]
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Заголовок"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "description": "Натисніть «Generate», щоб створити з заголовка.",
+        "name": "slug",
+        "type": "slug",
+        "title": "Адреса сторінки"
+      },
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "description": "Для анонімних авторів з окупованого Криму напишіть «Анонімний автор».",
+        "name": "author",
+        "type": "string",
+        "title": "Автор"
+      },
+      {
+        "description": "Наприклад: історик, журналістка, з окупованого Криму",
+        "name": "role",
+        "type": "string",
+        "title": "Хто автор"
+      },
+      {
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ]
+          }
+        ],
+        "name": "date",
+        "type": "date",
+        "title": "Дата публікації"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "fields": [
+          {
+            "name": "alt",
+            "type": "string",
+            "title": "Опис фото (для незрячих)"
+          }
+        ],
+        "name": "image",
+        "type": "image",
+        "title": "Фото"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "level": "error",
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 300
+              }
+            ]
+          }
+        ],
+        "description": "Одне-два речення під заголовком. Показується в картці.",
+        "name": "lead",
+        "type": "text",
+        "title": "Короткий опис"
+      },
+      {
+        "of": [
+          {
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Список"
+              },
+              {
+                "value": "number",
+                "title": "Нумерований"
+              }
+            ],
+            "marks": {
+              "annotations": [
+                {
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "level": "error",
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": false,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ],
+                      "name": "href",
+                      "type": "url",
+                      "title": "URL"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object",
+                  "title": "Посилання"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Жирний"
+                },
+                {
+                  "value": "em",
+                  "title": "Курсив"
+                }
+              ]
+            },
+            "of": [],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Звичайний"
+              },
+              {
+                "value": "h2",
+                "title": "Підзаголовок"
+              },
+              {
+                "value": "h3",
+                "title": "Малий підзаголовок"
+              },
+              {
+                "value": "blockquote",
+                "title": "Цитата"
+              }
+            ],
+            "type": "block"
+          },
+          {
+            "options": {
+              "hotspot": true
+            },
+            "fields": [
+              {
+                "name": "alt",
+                "type": "string",
+                "title": "Опис фото"
+              },
+              {
+                "name": "caption",
+                "type": "string",
+                "title": "Підпис"
+              }
+            ],
+            "type": "image",
+            "title": "Фото"
+          }
+        ],
+        "name": "body",
+        "type": "array",
+        "title": "Текст"
+      }
+    ],
+    "name": "blog",
+    "type": "document",
+    "title": "Блоги"
+  }
+]

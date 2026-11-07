@@ -1,0 +1,23 @@
+{
+  "createdAt": "2026-11-07T02:53:58.979Z",
+  "studioVersion": "6.22.0",
+  "version": 3,
+  "workspaces": [
+    {
+      "basePath": "/",
+      "dataset": "production",
+      "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" rx=\"2\" fill=\"#fa6400\"></rect><text x=\"50%\" y=\"50%\" text-anchor=\"middle\" alignment-baseline=\"middle\" fill=\"hsla(24, 100%, 9%, 1)\" style=\"font-family:Inter, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Liberation Sans&quot;, Helvetica, Arial, system-ui, sans-serif;font-weight:500;font-size:13px;transform:translateY(1px)\">C</text></svg>",
+      "mediaLibrary": {
+        "enabled": false,
+        "__internal": {
+          "federatedAssetSource": true
+        }
+      },
+      "name": "crimeavox",
+      "projectId": "v974t9kw",
+      "schema": "f6951e56.create-schema.json",
+      "title": "CrimeaVox",
+      "tools": "1cb76ba7.create-tools.json"
+    }
+  ]
+}

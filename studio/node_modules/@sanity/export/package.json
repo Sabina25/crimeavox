@@ -1,0 +1,74 @@
+{
+  "name": "@sanity/export",
+  "version": "7.1.0",
+  "description": "Export Sanity documents and assets",
+  "keywords": [
+    "cms",
+    "content",
+    "export",
+    "headless",
+    "ndjson",
+    "realtime",
+    "sanity"
+  ],
+  "homepage": "https://www.sanity.io/",
+  "bugs": {
+    "url": "https://github.com/sanity-io/export/issues"
+  },
+  "license": "MIT",
+  "author": "Sanity.io <hello@sanity.io>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanity-io/export.git"
+  },
+  "bin": {
+    "detect-corrupt": "./bin/detect-corrupt.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "src"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "format": "oxfmt",
+    "lint": "oxlint",
+    "prepublishOnly": "npm run build",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "get-it": "^9.5.4",
+    "modern-tar": "^0.8.5",
+    "obug": "^3.0.0",
+    "p-queue": "^9.0.1"
+  },
+  "devDependencies": {
+    "@sanity/client": "^8.6.1",
+    "@sanity/semantic-release-preset": "^6.0.0",
+    "@types/node": "^22.20.2",
+    "@vitest/coverage-v8": "^5.0.0",
+    "oxfmt": "^0.68.0",
+    "oxlint": "^1.83.0",
+    "tar": "^7.5.22",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

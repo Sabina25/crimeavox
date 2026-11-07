@@ -1,7 +1,7 @@
 // Контент сайту.
-// Основне джерело — Instagram: scripts/fetch-instagram.mjs щогодини складає src/content/instagram.json.
-// Нижче — матеріали, які додаються вручну (те, чого немає в Instagram), і демо-контент,
-// який показується лише тоді, коли даних з Instagram ще немає (наприклад, локально без токена).
+// Основне джерело — адмінка Sanity (див. src/cms.js і папку studio/). Сайт завантажує матеріали звідти.
+// Тут — запасні джерела: матеріали, додані вручну в код, дані з Instagram (поки вимкнено)
+// і демо-контент, який показується лише коли справжніх матеріалів ще немає.
 // img: шлях до фото відносно public/, без скісної риски на початку: 'img/news-1.jpg'.
 
 import instagram from './content/instagram.json'
@@ -178,13 +178,15 @@ const manualNews = []
 const manualEvents = []
 const manualBlogs = []
 
-const live = instagram.news.length + instagram.events.length + instagram.blogs.length > 0
-const byDateDesc = (a, b) => b.date.localeCompare(a.date)
+// Матеріали з коду: ручні + з Instagram (якщо інтеграцію ввімкнено)
+export const staticContent = {
+  news: [...manualNews, ...instagram.news],
+  events: [...manualEvents, ...instagram.events],
+  blogs: [...manualBlogs, ...instagram.blogs],
+}
 
-export const news = [...manualNews, ...(live ? instagram.news : demoNews)].sort(byDateDesc)
-export const events = [...manualEvents, ...(live ? instagram.events : demoEvents)].sort(byDateDesc)
-export const blogs = [...manualBlogs, ...(live ? instagram.blogs : demoBlogs)].sort(byDateDesc)
-export const fetchedAt = instagram.fetchedAt
+// Демо показується, лише коли немає жодного справжнього матеріалу (ні з Sanity, ні з коду)
+export const demoContent = { news: demoNews, events: demoEvents, blogs: demoBlogs }
 
 const MONTHS = ['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня']
 export function fmtDate(iso) {

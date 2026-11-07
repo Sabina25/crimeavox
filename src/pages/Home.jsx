@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom'
-import { news, events, blogs, isUpcoming } from '../data'
+import { isUpcoming } from '../data'
+import { useContent } from '../content'
+import { Status } from '../components/Status'
 import { NewsCard, EventRow, BlogCard } from '../components/Cards'
 import { Subscribe } from '../components/Layout'
 
 export default function Home() {
+  const { news, events, blogs, status } = useContent()
   const latest = news.slice(0, 5)
   const upcoming = events.filter(e => isUpcoming(e.date)).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 3)
   const posts = blogs.slice(0, 3)
@@ -29,11 +32,12 @@ export default function Home() {
             <h2>Новини</h2>
             <Link className="see-all" to="/news">Усі новини</Link>
           </div>
-          <div className="feed">
+          <Status status={status} empty={!latest.length} text="Новин поки немає." />
+          {latest.length > 0 && <div className="feed">
             {latest.map((n, i) => (
               <NewsCard key={n.slug} item={n} size={i === 0 ? 'lead' : i === 1 ? '' : 'third'} />
             ))}
-          </div>
+          </div>}
         </div>
       </section>
 
@@ -45,7 +49,7 @@ export default function Home() {
           </div>
           {upcoming.length
             ? <div className="ev-list">{upcoming.map(e => <EventRow key={e.slug} item={e} />)}</div>
-            : <p className="empty">Нових подій поки немає. Стежте за анонсами в Instagram.</p>}
+            : <Status status={status} empty text="Нових подій поки немає. Стежте за анонсами в Instagram." />}
         </div>
       </section>
 
@@ -55,7 +59,9 @@ export default function Home() {
             <h2>Блоги</h2>
             <Link className="see-all" to="/blog">Усі колонки</Link>
           </div>
-          <div className="posts">{posts.map(b => <BlogCard key={b.slug} item={b} />)}</div>
+          {posts.length > 0
+            ? <div className="posts">{posts.map(b => <BlogCard key={b.slug} item={b} />)}</div>
+            : <Status status={status} empty text="Колонок поки немає." />}
         </div>
       </section>
 

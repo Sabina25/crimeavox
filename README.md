@@ -1,6 +1,6 @@
 # CrimeaVox — сайт
 
-React + Vite. Розділи: головна, Новини, Події, Блоги, Про нас, окрема сторінка для кожного матеріалу.
+React + Vite + адмінка Sanity. Розділи: головна, Новини, Події, Блоги, Про нас, окрема сторінка для кожного матеріалу.
 
 ## Запуск
 
@@ -12,7 +12,53 @@ npm run build    # готовий сайт у папці dist/
 
 Папку `dist/` можна залити на будь-який хостинг (Netlify, Vercel, GitHub Pages, звичайний хостинг) — серверне налаштування не потрібне.
 
-## Контент з Instagram
+## Адмінка (Sanity)
+
+Новини, події та блоги редакція додає в адмінці: **https://crimeavox.sanity.studio**
+(адреса з'явиться після налаштування нижче). Опубліковано в адмінці → за хвилину на сайті.
+Перебудовувати чи пушити сайт не потрібно.
+
+### Як працювати в адмінці
+
+- Ліворуч три розділи: **Новини**, **Події**, **Блоги**. Кнопка ✏️ (або «+») — новий матеріал.
+- **Заголовок** → потім біля «Адреса сторінки» натисніть **Generate**.
+- **Виділити червоним** (лише новини) — частина заголовка на червоній плашці, як в Instagram.
+- **Фото** — обкладинка. Можна обрати, яка частина фото головна (кнопка з олівцем на фото → Hotspot).
+- **Текст** — підзаголовки, списки, цитати, жирний, посилання, фото всередині тексту.
+- Зміни зберігаються як чернетка. На сайт матеріал потрапляє лише після кнопки **Publish**.
+- Щоб прибрати матеріал з сайту: меню «⋯» → **Unpublish** (або Delete).
+
+### Налаштування (один раз)
+
+1. Зареєструйтесь на https://www.sanity.io (можна через Google або GitHub).
+2. https://www.sanity.io/manage → **Create new project** → назва `CrimeaVox`, тариф **Free**.
+   Скопіюйте **Project ID** (короткий код).
+3. У проєкті: **Datasets** → має бути `production` (якщо немає — **Add dataset**, назва `production`, **Public**).
+4. **API** → **CORS origins** → **Add CORS origin**, додайте по черзі:
+   - `https://sabina25.github.io`
+   - `http://localhost:5173`
+5. Вставте Project ID у два файли:
+   - `src/cms.config.js` → `projectId: 'ваш-id'`
+   - `studio/project.js` → `projectId = 'ваш-id'`
+6. Опублікуйте адмінку:
+   ```bash
+   cd studio
+   npm install
+   npx sanity login
+   npx sanity deploy
+   ```
+   Адмінка відкриється за адресою https://crimeavox.sanity.studio.
+7. Запушити сайт: `git add .`, `git commit -m "CMS"`, `git push`.
+8. Запросити редакторів: sanity.io/manage → проєкт → **Members** → **Invite members** (безкоштовно до 20 людей).
+
+### Якщо змінили поля адмінки (папка studio/schemaTypes)
+
+```bash
+cd studio
+npx sanity deploy
+```
+
+### Instagram (поки вимкнено)
 
 Сайт сам підтягує пости з Instagram **щогодини**. Нічого окремо публікувати на сайті не треба:
 пост в Instagram → протягом години він на сайті.
@@ -83,7 +129,10 @@ npm run dev
 
 ```
 src/
-  data.js              контент: Instagram + ручні матеріали
+  cms.config.js        Project ID адмінки Sanity
+  cms.js               завантаження матеріалів з Sanity
+  content.jsx          об'єднує Sanity, ручні матеріали і демо
+  data.js              ручні матеріали, Instagram, демо-контент
   content/instagram.json  дані з Instagram (заповнюється автоматично)
   styles.css           стилі
   main.jsx             маршрути
@@ -95,12 +144,13 @@ src/
   pages/About.jsx        про нас
 ```
 
-scripts/fetch-instagram.mjs — забирає пости з Instagram
+studio/ — адмінка Sanity (поля новин, подій, блогів — у studio/schemaTypes)
+scripts/fetch-instagram.mjs — забирає пости з Instagram (поки вимкнено)
 .github/workflows/deploy.yml — щогодинне оновлення і публікація
 
 ## Що зробити перед запуском
 
-- Додати секрети `IG_TOKEN` і `GH_PAT` (див. вище).
+- Налаштувати адмінку Sanity (див. вище) і внести перші матеріали.
 - Підключити форму підписки до сервісу розсилок (`components/Layout.jsx`).
 - Вставити посилання на Telegram, YouTube, контакти.
 - Оновити цифру політв'язнів на головній.

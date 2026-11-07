@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
+import { ContentProvider } from './content'
 import Home from './pages/Home'
 import About from './pages/About'
 import { NewsPage, EventsPage, BlogPage } from './pages/Lists'
@@ -10,6 +11,7 @@ import './styles.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <ContentProvider>
     <HashRouter>
       <Routes>
         <Route element={<Layout />}>
@@ -25,5 +27,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </Route>
       </Routes>
     </HashRouter>
+    </ContentProvider>
   </React.StrictMode>
 )

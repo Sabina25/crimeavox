@@ -3,3 +3,25 @@
 .ig-link{display:inline-block;margin-top:8px;font-weight:600;text-decoration:none;border-bottom:2px solid var(--red);padding-bottom:2px}
 .ig-link:hover{color:var(--red)}
 .ev-meta span:empty{display:none}
+
+/* Стан завантаження */
+.loading{animation:cv-pulse 1.2s ease-in-out infinite}
+@keyframes cv-pulse{50%{opacity:.4}}
+
+/* Текст з адмінки */
+.prose .rt-h2{font:900 clamp(22px,2.4vw,30px)/1.15 var(--head);text-transform:uppercase;letter-spacing:-.02em;margin:1.6em 0 .6em}
+.prose .rt-h3{font:700 clamp(19px,1.8vw,22px)/1.25 var(--head);letter-spacing:-.01em;margin:1.4em 0 .5em}
+.prose blockquote{border-left:4px solid var(--red);padding:4px 0 4px 20px;margin:1.4em 0;font-size:21px;line-height:1.55}
+.prose ul,.prose ol{padding-left:1.3em;margin:0 0 1.1em}
+.prose li{font-size:19px;line-height:1.7;margin-bottom:.35em}
+.prose a{color:var(--red);text-underline-offset:3px}
+.prose figure{margin:1.8em 0}
+.prose figure img{width:100%;border:2px solid var(--ink)}
+.prose figcaption{font-size:14px;color:var(--mute);margin-top:8px}
+
+/* Коли матеріалів мало — картки розтягуються, щоб не лишалось порожніх чорних клітинок */
+.feed > .card.lead:only-child,
+.feed.related > .card:only-child{grid-column:span 12;min-height:360px}
+.feed.related > .card:first-child:nth-last-child(2),
+.feed.related > .card:last-child:nth-child(2){grid-column:span 6}
+@media (max-width:640px){.feed.related > .card{grid-column:span 12!important}}

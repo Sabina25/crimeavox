@@ -1,12 +1,15 @@
 import { Link, useParams } from 'react-router-dom'
 import '../live.css'
-import { news, events, blogs, NEWS_RUBRICS, fmtDate, isUpcoming } from '../data'
+import { NEWS_RUBRICS, fmtDate, isUpcoming } from '../data'
+import { useContent } from '../content'
+import { Status } from '../components/Status'
+import RichText from '../components/RichText'
 import { Media, Headline, NewsCard, BlogCard } from '../components/Cards'
 
 function Body({ paragraphs = [], item }) {
   return (
     <div className="prose">
-      {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+      <RichText value={paragraphs} />
       {item?.permalink && (
         <a className="ig-link" href={item.permalink} target="_blank" rel="noreferrer">
           {item.video ? 'Дивитися відео в Instagram' : 'Оригінал в Instagram'}
@@ -14,6 +17,10 @@ function Body({ paragraphs = [], item }) {
       )}
     </div>
   )
+}
+
+function Pending() {
+  return <section className="page-head"><div className="wrap"><Status status="loading" empty /></div></section>
 }
 
 export function NotFound() {
@@ -30,8 +37,9 @@ export function NotFound() {
 
 export function NewsArticle() {
   const { slug } = useParams()
+  const { news, status } = useContent()
   const item = news.find(n => n.slug === slug)
-  if (!item) return <NotFound />
+  if (!item) return status === 'loading' ? <Pending /> : <NotFound />
   const more = news.filter(n => n.slug !== slug).slice(0, 3)
 
   return (
@@ -46,20 +54,23 @@ export function NewsArticle() {
         </div>
       </header>
       <div className="wrap"><Body paragraphs={item.body} item={item} /></div>
-      <section className="tight">
-        <div className="wrap">
-          <h2 className="sub-h">Читайте також</h2>
-          <div className="feed">{more.map(n => <NewsCard key={n.slug} item={n} />)}</div>
-        </div>
-      </section>
+      {more.length > 0 && (
+        <section className="tight">
+          <div className="wrap">
+            <h2 className="sub-h">Читайте також</h2>
+            <div className="feed related">{more.map(n => <NewsCard key={n.slug} item={n} />)}</div>
+          </div>
+        </section>
+      )}
     </article>
   )
 }
 
 export function EventDetail() {
   const { slug } = useParams()
+  const { events, status } = useContent()
   const item = events.find(e => e.slug === slug)
-  if (!item) return <NotFound />
+  if (!item) return status === 'loading' ? <Pending /> : <NotFound />
   const upcoming = isUpcoming(item.date)
 
   return (
@@ -89,8 +100,9 @@ export function EventDetail() {
 
 export function BlogPost() {
   const { slug } = useParams()
+  const { blogs, status } = useContent()
   const item = blogs.find(b => b.slug === slug)
-  if (!item) return <NotFound />
+  if (!item) return status === 'loading' ? <Pending /> : <NotFound />
   const more = blogs.filter(b => b.slug !== slug).slice(0, 3)
 
   return (
