@@ -58,6 +58,37 @@ cd studio
 npx sanity deploy
 ```
 
+## Відео з YouTube
+
+Сторінка **Відео** і блок на головній показують 10 останніх відео і до 15 Shorts з каналу
+https://www.youtube.com/@crimea_vox. Нічого робити не треба: GitHub щогодини забирає нові відео
+(скрипт `scripts/fetch-youtube.mjs`) і оновлює сайт. Нове відео на YouTube → протягом години на сайті.
+
+Без ключа сайт бере відео з відкритих RSS-стрічок YouTube — це лише 15 останніх записів каналу.
+Якщо на каналі виходять переважно Shorts, довгих відео серед них може бути мало.
+Щоб на сайті **завжди було 10 останніх довгих відео**, додайте безкоштовний ключ YouTube Data API:
+
+1. https://console.cloud.google.com → угорі «Select a project» → **New project** → назва `CrimeaVox` → Create.
+2. **APIs & Services → Library** → знайдіть **YouTube Data API v3** → **Enable**.
+3. **APIs & Services → Credentials → Create credentials → API key**. Скопіюйте ключ.
+   Натисніть на ключ → **API restrictions → Restrict key** → оберіть YouTube Data API v3 → Save.
+4. GitHub → репозиторій → Settings → Secrets and variables → Actions → **New repository secret**:
+   назва `YT_API_KEY`, значення — ключ.
+
+Безкоштовного ліміту (10 000 одиниць на добу) вистачає з величезним запасом: сайт витрачає близько 100.
+
+Перевірити локально з живими даними:
+
+```bash
+node scripts/fetch-youtube.mjs
+# або з ключем:
+YT_API_KEY=ваш-ключ node scripts/fetch-youtube.mjs
+npm run dev
+```
+
+Тест без інтернету: `YT_MOCK=scripts/mock-youtube.xml node scripts/fetch-youtube.mjs`
+(після тесту поверніть файл: `git checkout src/content/youtube.json`).
+
 ### Instagram (поки вимкнено)
 
 Сайт сам підтягує пости з Instagram **щогодини**. Нічого окремо публікувати на сайті не треба:
@@ -139,12 +170,14 @@ src/
   components/Layout.jsx  шапка, підвал, підписка
   components/Cards.jsx   картки новин, подій, блогів
   pages/Home.jsx         головна
+  pages/Video.jsx        відео з YouTube
   pages/Lists.jsx        списки розділів
   pages/Detail.jsx       сторінки матеріалів
   pages/About.jsx        про нас
 ```
 
 studio/ — адмінка Sanity (поля новин, подій, блогів — у studio/schemaTypes)
+scripts/fetch-youtube.mjs — забирає відео з YouTube
 scripts/fetch-instagram.mjs — забирає пости з Instagram (поки вимкнено)
 .github/workflows/deploy.yml — щогодинне оновлення і публікація
 

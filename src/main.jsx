@@ -5,6 +5,7 @@ import Layout from './components/Layout'
 import { ContentProvider } from './content'
 import Home from './pages/Home'
 import About from './pages/About'
+import VideoPage from './pages/Video'
 import { NewsPage, EventsPage, BlogPage } from './pages/Lists'
 import { NewsArticle, EventDetail, BlogPost, NotFound } from './pages/Detail'
 import './styles.css'
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="events/:slug" element={<EventDetail />} />
           <Route path="blog" element={<BlogPage />} />
           <Route path="blog/:slug" element={<BlogPost />} />
+          <Route path="video" element={<VideoPage />} />
           <Route path="about" element={<About />} />
           <Route path="*" element={<NotFound />} />
         </Route>

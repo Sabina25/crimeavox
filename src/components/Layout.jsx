@@ -5,6 +5,7 @@ const NAV = [
   { to: '/news', label: 'Новини' },
   { to: '/events', label: 'Події' },
   { to: '/blog', label: 'Блоги' },
+  { to: '/video', label: 'Відео' },
   { to: '/about', label: 'Про нас' },
 ]
 
@@ -93,7 +94,7 @@ function Footer() {
               <li><a href="https://www.instagram.com/crimea_vox/" target="_blank" rel="noreferrer">Instagram</a></li>
               <li><a href="https://www.threads.net/@crimea_vox" target="_blank" rel="noreferrer">Threads</a></li>
               <li><a href="#">Telegram</a></li>
-              <li><a href="#">YouTube</a></li>
+              <li><a href="https://www.youtube.com/@crimea_vox" target="_blank" rel="noreferrer">YouTube</a></li>
             </ul>
           </div>
           <div>

@@ -4,12 +4,16 @@ import { useContent } from '../content'
 import { Status } from '../components/Status'
 import { NewsCard, EventRow, BlogCard } from '../components/Cards'
 import { Subscribe } from '../components/Layout'
+import { videos, shorts } from '../youtube'
+import { VideoCard, ShortCard, Player, usePlayer } from '../components/Video'
+import '../video.css'
 
 export default function Home() {
   const { news, events, blogs, status } = useContent()
   const latest = news.slice(0, 5)
   const upcoming = events.filter(e => isUpcoming(e.date)).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 3)
   const posts = blogs.slice(0, 3)
+  const player = usePlayer()
 
   return (
     <>
@@ -64,6 +68,24 @@ export default function Home() {
             : <Status status={status} empty text="Колонок поки немає." />}
         </div>
       </section>
+
+      {/* {(videos.length > 0 || shorts.length > 0) && (
+        <section className="band">
+          <div className="wrap">
+            <div className="sec-head">
+              <h2>Відео</h2>
+              <Link className="see-all" to="/video">Усі відео</Link>
+            </div>
+            {videos.length > 0 && (
+              <div className="vgrid">{videos.slice(0, 3).map(v => <VideoCard key={v.id} v={v} onPlay={player.play} />)}</div>
+            )}
+            {shorts.length > 0 && (
+              <div className="shorts home-shorts">{shorts.slice(0, 8).map(v => <ShortCard key={v.id} v={v} onPlay={player.play} />)}</div>
+            )}
+          </div>
+          <Player video={player.video} onClose={player.close} />
+        </section>
+      )} */}
 
       <section className="prisoners">
         <div className="wrap">
