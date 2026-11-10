@@ -19,7 +19,7 @@ export default function Home() {
     <>
       <section className="hero">
         <div className="wrap">
-          <h1>Голос Криму, <span className="plate">який не затихає</span></h1>
+          <h1><span className="bubble">Голос Криму,</span><span className="bubble red">який не затихає</span></h1>
           <div className="hero-foot">
             <p>Незалежне медіа про кримських татар, окупацію і спротив. Новини з півострова, історія, яку намагаються стерти, і культура, яка живе попри все.</p>
             <div className="cta">
@@ -69,7 +69,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* {(videos.length > 0 || shorts.length > 0) && (
+      {(videos.length > 0 || shorts.length > 0) && (
         <section className="band">
           <div className="wrap">
             <div className="sec-head">
@@ -85,7 +85,7 @@ export default function Home() {
           </div>
           <Player video={player.video} onClose={player.close} />
         </section>
-      )} */}
+      )}
 
       <section className="prisoners">
         <div className="wrap">

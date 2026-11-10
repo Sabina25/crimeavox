@@ -9,12 +9,11 @@ const NAV = [
   { to: '/about', label: 'Про нас' },
 ]
 
-export function Mark({ size = 46 }) {
-  return (
-    <span className="mark" style={{ width: size, height: size }} aria-hidden="true">
-      <span><b>CRI</b><b>MEA</b><b>VOX</b></span>
-    </span>
-  )
+// Логотипи з брендбуку (public/brand). BASE_URL — щоб працювало і на github.io/crimeavox, і на своєму домені
+const asset = (p) => `${import.meta.env.BASE_URL}${p}`
+
+export function Logo({ dark, className }) {
+  return <img className={className} src={asset(dark ? 'brand/logo-dark.svg' : 'brand/logo-light.svg')} alt="CrimeaVox" width="290" height="101" />
 }
 
 function Header() {
@@ -26,8 +25,7 @@ function Header() {
     <header className="site-head">
       <div className="wrap bar">
         <Link className="logo" to="/" aria-label="CrimeaVox, на головну">
-          <Mark />
-          <span>CrimeaVox</span>
+          <Logo />
         </Link>
         <nav id="nav" className={open ? 'open' : ''} aria-label="Головне меню">
           <ul>
@@ -79,7 +77,7 @@ function Footer() {
       <div className="wrap">
         <div className="f-top">
           <div>
-            <div className="f-mark"><b>CRI</b><b>MEA</b>VOX</div>
+            <Logo dark className="f-logo" />
             <p>Голос Криму, який не затихає.</p>
           </div>
           <div>

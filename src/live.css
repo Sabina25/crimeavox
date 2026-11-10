@@ -9,14 +9,15 @@
 @keyframes cv-pulse{50%{opacity:.4}}
 
 /* Текст з адмінки */
-.prose .rt-h2{font:900 clamp(22px,2.4vw,30px)/1.15 var(--head);text-transform:uppercase;letter-spacing:-.02em;margin:1.6em 0 .6em}
-.prose .rt-h3{font:700 clamp(19px,1.8vw,22px)/1.25 var(--head);letter-spacing:-.01em;margin:1.4em 0 .5em}
-.prose blockquote{border-left:4px solid var(--red);padding:4px 0 4px 20px;margin:1.4em 0;font-size:21px;line-height:1.55}
+.prose .rt-h2{font:800 clamp(21px,2.2vw,28px)/1.2 var(--font);text-transform:uppercase;color:var(--graphite);margin:1.6em 0 .6em}
+.prose .rt-h3{font:800 clamp(18px,1.7vw,21px)/1.3 var(--font);margin:1.4em 0 .5em}
+.prose blockquote{position:relative;background:var(--stone);border-radius:var(--r);padding:20px 24px;margin:1.6em 0 1.6em 14px;font-size:20px;font-weight:600;line-height:1.5;color:var(--graphite)}
+.prose blockquote::after{content:"";position:absolute;bottom:0;left:-14px;width:22px;height:18px;background:inherit;-webkit-mask:var(--tail-l) no-repeat center/100% 100%;mask:var(--tail-l) no-repeat center/100% 100%}
 .prose ul,.prose ol{padding-left:1.3em;margin:0 0 1.1em}
 .prose li{font-size:19px;line-height:1.7;margin-bottom:.35em}
 .prose a{color:var(--red);text-underline-offset:3px}
 .prose figure{margin:1.8em 0}
-.prose figure img{width:100%;border:2px solid var(--ink)}
+.prose figure img{width:100%;border-radius:var(--r)}
 .prose figcaption{font-size:14px;color:var(--mute);margin-top:8px}
 
 /* Коли матеріалів мало — картки розтягуються, щоб не лишалось порожніх чорних клітинок */
