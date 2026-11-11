@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { NEWS_RUBRICS, isUpcoming } from '../data'
 import { useContent } from '../content'
 import { Status } from '../components/Status'
-import { NewsCard, EventRow, BlogCard } from '../components/Cards'
+import { NewsCard, EventRow, Columns } from '../components/Cards'
 
 const PAGE = 12
 
@@ -97,7 +97,7 @@ export function BlogPage() {
       <section className="tight">
         <div className="wrap">
           {shown.length > 0
-            ? <div className="posts">{shown.map(b => <BlogCard key={b.slug} item={b} />)}</div>
+            ? <Columns items={shown} />
             : <Status status={status} empty text="Колонок поки немає." />}
           {hasMore && <More onClick={more} />}
         </div>

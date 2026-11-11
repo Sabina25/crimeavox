@@ -9,7 +9,7 @@ const common = `"slug": slug.current, title, date, lead, "img": image.asset->url
 const QUERY = `{
   "news": *[_type == "news" && defined(slug.current)] | order(date desc, _createdAt desc)[0...300]{ ${common}, accent, rubric },
   "events": *[_type == "event" && defined(slug.current)] | order(date desc)[0...300]{ ${common}, type, time, city, place, link },
-  "blogs": *[_type == "blog" && defined(slug.current)] | order(date desc, _createdAt desc)[0...300]{ ${common}, author, role }
+  "blogs": *[_type == "blog" && defined(slug.current)] | order(date desc, _createdAt desc)[0...300]{ ${common}, author, role, "authorPhoto": authorPhoto.asset->url }
 }`
 
 const TONES = ['a', 'b', 'c', 'd', 'e', 'f']
@@ -37,9 +37,15 @@ function normalize(item, extra = {}) {
   }
 }
 
+// На живому сайті — через CDN Sanity (швидко, великий безкоштовний ліміт; зміни з'являються протягом ~хвилини).
+// Локально (npm run dev) — напряму, без CDN: правки видно одразу після Publish.
+const isLocal = typeof location !== 'undefined' && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+const HOST = isLocal ? 'api.sanity.io' : 'apicdn.sanity.io'
+
 export async function fetchContent() {
-  const url = `https://${SANITY.projectId}.apicdn.sanity.io/${API_VERSION}/data/query/${SANITY.dataset}?query=${encodeURIComponent(QUERY)}`
-  const res = await fetch(url)
+  const url = `https://${SANITY.projectId}.${HOST}/${API_VERSION}/data/query/${SANITY.dataset}?query=${encodeURIComponent(QUERY)}`
+  // no-store: браузер не бере стару відповідь зі свого кешу
+  const res = await fetch(url, { cache: 'no-store' })
   if (!res.ok) throw new Error(`Sanity: ${res.status}`)
   const { result } = await res.json()
   return {
@@ -47,7 +53,7 @@ export async function fetchContent() {
     events: result.events.map((e) => normalize(e, { type: e.type || 'Подія', city: e.city || '', place: e.place || 'Місце уточнюється', time: e.time || '', link: e.link || '' })),
     blogs: result.blogs.map((b) => {
       const words = blocksText(b.body).split(/\s+/).filter(Boolean).length
-      return normalize(b, { author: b.author || 'CrimeaVox', role: b.role || 'редакція', read: Math.max(1, Math.round(words / 200)) })
+      return normalize(b, { author: b.author || 'CrimeaVox', role: b.role || 'редакція', authorPhoto: sized(b.authorPhoto, 480), read: Math.max(1, Math.round(words / 200)) })
     }),
   }
 }

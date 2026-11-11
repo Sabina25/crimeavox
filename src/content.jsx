@@ -41,17 +41,30 @@ export function ContentProvider({ children }) {
   useEffect(() => {
     if (!cmsEnabled) return
     let alive = true
-    fetchContent()
-      .then((data) => {
-        if (!alive) return
-        writeCache(data)
-        setState({ ...merge(data), status: 'ready' })
-      })
-      .catch((e) => {
-        console.error(e)
-        if (alive) setState((s) => ({ ...s, status: s.empty ? 'error' : 'ready', empty: false }))
-      })
-    return () => { alive = false }
+    let last = 0
+    const load = () => {
+      last = Date.now()
+      fetchContent()
+        .then((data) => {
+          if (!alive) return
+          writeCache(data)
+          setState({ ...merge(data), status: 'ready' })
+        })
+        .catch((e) => {
+          console.error('Не вдалося завантажити матеріали з Sanity. Якщо сайт запущено локально — перевірте CORS origins.', e)
+          if (alive) setState((s) => ({ ...s, status: s.empty ? 'error' : 'ready', empty: false }))
+        })
+    }
+    load()
+    // Повернулись на вкладку (наприклад, з адмінки) — підтягуємо свіжі дані, не частіше ніж раз на 20 секунд
+    const onVisible = () => { if (document.visibilityState === 'visible' && Date.now() - last > 20000) load() }
+    document.addEventListener('visibilitychange', onVisible)
+    window.addEventListener('focus', onVisible)
+    return () => {
+      alive = false
+      document.removeEventListener('visibilitychange', onVisible)
+      window.removeEventListener('focus', onVisible)
+    }
   }, [])
 
   return <Ctx.Provider value={state}>{children}</Ctx.Provider>

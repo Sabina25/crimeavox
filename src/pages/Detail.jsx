@@ -4,7 +4,7 @@ import { NEWS_RUBRICS, fmtDate, isUpcoming } from '../data'
 import { useContent } from '../content'
 import { Status } from '../components/Status'
 import RichText from '../components/RichText'
-import { Media, Headline, NewsCard, BlogCard } from '../components/Cards'
+import { Media, Headline, NewsCard, BlogCard, Avatar } from '../components/Cards'
 
 function Body({ paragraphs = [], item }) {
   return (
@@ -103,7 +103,7 @@ export function BlogPost() {
   const { blogs, status } = useContent()
   const item = blogs.find(b => b.slug === slug)
   if (!item) return status === 'loading' ? <Pending /> : <NotFound />
-  const more = blogs.filter(b => b.slug !== slug).slice(0, 3)
+  const more = blogs.filter(b => b.slug !== slug).slice(0, 4)
 
   return (
     <article>
@@ -113,7 +113,7 @@ export function BlogPost() {
           <h1>{item.title}</h1>
           {item.lead && <p className="art-lead">{item.lead}</p>}
           <div className="post-by big">
-            <span className="ava" aria-hidden="true">{item.author.trim()[0]}</span>
+            <Avatar item={item} className="big" />
             <span><b>{item.author}</b>, {item.role}<br />{fmtDate(item.date)}, {item.read} хв читання</span>
           </div>
         </div>
@@ -123,7 +123,7 @@ export function BlogPost() {
         <section className="tight">
           <div className="wrap">
             <h2 className="sub-h">Інші колонки</h2>
-            <div className="posts">{more.map(b => <BlogCard key={b.slug} item={b} />)}</div>
+            <div className="cols-grid">{more.map(b => <BlogCard key={b.slug} item={b} />)}</div>
           </div>
         </section>
       )}

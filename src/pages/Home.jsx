@@ -2,23 +2,23 @@ import { Link } from 'react-router-dom'
 import { isUpcoming } from '../data'
 import { useContent } from '../content'
 import { Status } from '../components/Status'
-import { NewsCard, EventRow, BlogCard } from '../components/Cards'
+import { NewsCard, EventRow, Columns } from '../components/Cards'
 import { Subscribe } from '../components/Layout'
-import { videos, shorts } from '../youtube'
-import { VideoCard, ShortCard, Player, usePlayer } from '../components/Video'
+import { videos } from '../youtube'
+import { VideoCard, Player, usePlayer } from '../components/Video'
 import '../video.css'
 
 export default function Home() {
   const { news, events, blogs, status } = useContent()
   const latest = news.slice(0, 5)
   const upcoming = events.filter(e => isUpcoming(e.date)).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 3)
-  const posts = blogs.slice(0, 3)
+  const posts = blogs.slice(0, 6)
   const player = usePlayer()
 
   return (
     <>
       <section className="hero">
-        <div className="wrap">
+        <div className="wrap hero-in">
           <h1><span className="bubble">Голос Криму,</span><span className="bubble red">який не затихає</span></h1>
           <div className="hero-foot">
             <p>Незалежне медіа про кримських татар, окупацію і спротив. Новини з півострова, історія, яку намагаються стерти, і культура, яка живе попри все.</p>
@@ -64,24 +64,20 @@ export default function Home() {
             <Link className="see-all" to="/blog">Усі колонки</Link>
           </div>
           {posts.length > 0
-            ? <div className="posts">{posts.map(b => <BlogCard key={b.slug} item={b} />)}</div>
+            ? <Columns items={posts} />
             : <Status status={status} empty text="Колонок поки немає." />}
         </div>
       </section>
 
-      {(videos.length > 0 || shorts.length > 0) && (
+      {videos.length > 0 && (
         <section className="band">
           <div className="wrap">
             <div className="sec-head">
               <h2>Відео</h2>
               <Link className="see-all" to="/video">Усі відео</Link>
             </div>
-            {videos.length > 0 && (
-              <div className="vgrid">{videos.slice(0, 3).map(v => <VideoCard key={v.id} v={v} onPlay={player.play} />)}</div>
-            )}
-            {shorts.length > 0 && (
-              <div className="shorts home-shorts">{shorts.slice(0, 8).map(v => <ShortCard key={v.id} v={v} onPlay={player.play} />)}</div>
-            )}
+            {/* на головній — лише звичайні відео; Shorts — на сторінці «Відео» */}
+            <div className="vgrid">{videos.slice(0, 3).map(v => <VideoCard key={v.id} v={v} onPlay={player.play} />)}</div>
           </div>
           <Player video={player.video} onClose={player.close} />
         </section>

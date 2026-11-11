@@ -50,17 +50,56 @@ export function EventRow({ item, past }) {
   )
 }
 
-export function BlogCard({ item }) {
+// Кругле фото автора; якщо фото немає — ініціали на червоному
+export function Avatar({ item, className = '' }) {
+  const initials = item.author.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase()
   return (
-    <Link className="post" to={`/blog/${item.slug}`}>
-      <div className="post-img"><Media item={item} /></div>
-      <div className="post-by">
-        <span className="ava" aria-hidden="true">{item.author.trim()[0]}</span>
-        <span><b>{item.author}</b>, {item.role}</span>
-      </div>
+    <span className={`avatar ${className}`} aria-hidden="true">
+      {item.authorPhoto ? <img src={item.authorPhoto} alt="" loading="lazy" /> : initials}
+    </span>
+  )
+}
+
+// Колонка: акцент на авторі (фото, ім'я, посада), під ним заголовок.
+// variant: 'feature' — велика головна, 'side' — поруч з головною, без variant — у сітці
+export function BlogCard({ item, variant }) {
+  const who = (
+    <span className="col-who">
+      <span className="col-name">{item.author}</span>
+      {item.role && <span className="col-role">{item.role}</span>}
+    </span>
+  )
+  if (variant === 'feature') {
+    return (
+      <Link className="col feature" to={`/blog/${item.slug}`}>
+        <Avatar item={item} />
+        <span className="col-body">
+          {who}
+          <h3>{item.title}</h3>
+          <time dateTime={item.date}>{fmtDate(item.date)}, {item.read} хв читання</time>
+        </span>
+      </Link>
+    )
+  }
+  return (
+    <Link className={`col ${variant || ''}`} to={`/blog/${item.slug}`}>
+      <span className="col-head"><Avatar item={item} />{who}</span>
       <h3>{item.title}</h3>
-      <p>{item.lead}</p>
-      <span className="post-meta">{fmtDate(item.date)}, {item.read} хв читання</span>
+      <time dateTime={item.date}>{fmtDate(item.date)}</time>
     </Link>
+  )
+}
+
+// Блок колонок: головна + бічна зверху, решта — сіткою по 4
+export function Columns({ items }) {
+  const [first, second, ...rest] = items
+  return (
+    <div className="columns">
+      <div className={`cols-top ${second ? '' : 'single'}`}>
+        {first && <BlogCard item={first} variant="feature" />}
+        {second && <BlogCard item={second} variant="side" />}
+      </div>
+      {rest.length > 0 && <div className="cols-grid">{rest.map((b) => <BlogCard key={b.slug} item={b} />)}</div>}
+    </div>
   )
 }

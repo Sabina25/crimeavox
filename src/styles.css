@@ -32,7 +32,7 @@ img{max-width:100%;display:block}
 .plate{display:inline;background:var(--red);color:#fff;padding:.04em .28em;border-radius:.28em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 
 h1,h2,h3,h4{font-family:var(--font)}
-h1,h2{font-weight:800;text-transform:uppercase;letter-spacing:-.01em;overflow-wrap:break-word;hyphens:auto}
+h1,h2{font-weight:800;text-transform:uppercase;letter-spacing:-.01em;overflow-wrap:break-word;hyphens:manual}
 h2{font-size:clamp(26px,3.4vw,40px);line-height:1.1}
 
 /* Репліка: плашка з хвостиком. .bubble — графітова зліва (CRIMEA), .bubble.red — червона справа (VOX) */
@@ -72,7 +72,7 @@ h2{font-size:clamp(26px,3.4vw,40px);line-height:1.1}
 /* Секції */
 section{padding:clamp(56px,8vw,96px) 0}
 section.tight{padding-top:clamp(32px,4vw,48px)}
-.hero + section{padding-top:clamp(32px,4vw,56px)}
+.hero + section{padding-top:clamp(24px,3vw,40px)}
 .band{background:var(--stone)}
 .sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:clamp(24px,3vw,36px);flex-wrap:wrap}
 /* Заголовки розділів — графітові репліки */
@@ -85,16 +85,21 @@ section.tight{padding-top:clamp(32px,4vw,48px)}
 .empty{color:var(--mute);padding:28px;background:var(--stone);border-radius:var(--r)}
 .band .empty{background:var(--paper)}
 
-/* Перший екран: дві репліки, як у логотипі */
-.hero{padding:clamp(36px,5vw,72px) 0 clamp(24px,3vw,40px)}
-.hero h1{font-size:clamp(26px,6.2vw,80px);line-height:1;letter-spacing:-.015em;display:flex;flex-direction:column;align-items:flex-start;gap:.14em}
+/* Перший екран: дві репліки, як у логотипі. Компактний, щоб новини було видно одразу */
+.hero{padding:clamp(28px,4vw,56px) 0 clamp(20px,2.5vw,32px)}
+.hero-in{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(32px,4vw,64px);align-items:end}
+.hero h1{font-size:clamp(26px,4.4vw,64px);line-height:1;letter-spacing:-.015em;display:flex;flex-direction:column;align-items:flex-start;gap:.14em}
 .hero h1 .bubble{padding:.08em .38em .14em;border-radius:.24em}
 .hero h1 .bubble:first-child{margin-left:.42em}
-.hero h1 .bubble.red{margin-left:clamp(.9em,8vw,2.4em)}
-.hero-foot{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;margin-top:clamp(28px,3.5vw,44px)}
-.hero-foot p{font-size:clamp(17px,1.6vw,20px);max-width:48ch;color:var(--mute)}
+.hero h1 .bubble.red{margin-left:1.2em}
+.hero-foot{display:flex;flex-direction:column;gap:20px;padding-bottom:.2em}
+.hero-foot p{font-size:clamp(15px,1.25vw,17px);line-height:1.6;max-width:44ch;color:var(--mute)}
 .cta{display:flex;gap:12px;flex-wrap:wrap}
-@media (max-width:720px){.hero-foot{grid-template-columns:1fr}.hero h1 .bubble.red{margin-left:.6em}}
+@media (max-width:1000px){
+  .hero-in{grid-template-columns:1fr;gap:24px}
+  .hero h1{font-size:clamp(26px,7vw,60px)}
+}
+@media (max-width:720px){.hero h1 .bubble.red{margin-left:.6em}}
 
 /* Шапка сторінки розділу */
 .page-head{padding:clamp(44px,6vw,88px) 0 0}
@@ -247,3 +252,39 @@ section.tight{padding-top:clamp(32px,4vw,48px)}
 .f-top p{color:#A7A29E;font-size:15px;margin-top:16px;max-width:30ch}
 .f-bot{display:flex;justify-content:space-between;gap:16px;padding-top:24px;font-size:14px;color:#8F8A86;flex-wrap:wrap}
 @media (max-width:860px){.f-top{grid-template-columns:1fr 1fr}}
+
+/* Колонки (блоги): акцент на авторі */
+.cols-top{display:grid;grid-template-columns:minmax(0,2.3fr) minmax(0,1fr);gap:clamp(28px,4vw,64px);align-items:start;padding-bottom:clamp(28px,3.5vw,48px)}
+.cols-top.single{grid-template-columns:1fr}
+.cols-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,2.5vw,40px)}
+.col{display:flex;flex-direction:column;gap:14px;text-decoration:none;padding-top:22px;border-top:1px solid var(--line)}
+.col-head{display:flex;align-items:center;gap:16px}
+.col-who{display:flex;flex-direction:column;gap:3px;min-width:0}
+.col-name{font-weight:700;font-size:15px;line-height:1.25;letter-spacing:.02em;text-transform:uppercase;color:var(--red)}
+.col-role{font-size:13px;line-height:1.4;color:var(--mute)}
+.col h3{font:800 clamp(17px,1.5vw,20px)/1.3 var(--font);color:var(--ink)}
+.col time{font-size:13px;color:var(--mute)}
+.col:hover h3{color:var(--red)}
+.col:hover .avatar img{transform:scale(1.05)}
+.avatar{flex:none;width:76px;height:76px;border-radius:50%;overflow:hidden;background:var(--red);color:#fff;display:grid;place-items:center;font:800 24px var(--font);letter-spacing:.02em}
+.avatar img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.col.feature,.col.side{border-top:0;padding-top:0}
+.col.feature{flex-direction:row;align-items:center;gap:clamp(24px,3.4vw,48px)}
+.col.feature .avatar{width:clamp(120px,18vw,240px);height:clamp(120px,18vw,240px);font-size:clamp(36px,5vw,64px)}
+.col-body{display:flex;flex-direction:column;gap:10px;min-width:0}
+.col.feature .col-name{font-size:17px}
+.col.feature h3{font-size:clamp(24px,3vw,42px);line-height:1.15;margin-top:4px}
+.col.side .avatar{width:96px;height:96px;font-size:30px}
+.col.side h3{font-size:clamp(19px,1.8vw,24px);line-height:1.25}
+.band .col{border-top-color:#D9D5D2}
+.avatar.big{width:64px;height:64px;font-size:20px}
+@media (max-width:1000px){
+  .cols-top{grid-template-columns:1fr}
+  .col.side{border-top:1px solid var(--line);padding-top:22px}
+  .cols-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+  .cols-grid{grid-template-columns:1fr}
+  .col.feature{flex-direction:column;align-items:flex-start;gap:18px}
+  .col.feature .avatar{width:120px;height:120px}
+}
