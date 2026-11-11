@@ -11,8 +11,8 @@
 /* Текст з адмінки */
 .prose .rt-h2{font:800 clamp(21px,2.2vw,28px)/1.2 var(--font);text-transform:uppercase;color:var(--graphite);margin:1.6em 0 .6em}
 .prose .rt-h3{font:800 clamp(18px,1.7vw,21px)/1.3 var(--font);margin:1.4em 0 .5em}
-.prose blockquote{position:relative;background:var(--stone);border-radius:var(--r);padding:20px 24px;margin:1.6em 0 1.6em 14px;font-size:20px;font-weight:600;line-height:1.5;color:var(--graphite)}
-.prose blockquote::after{content:"";position:absolute;bottom:0;left:-14px;width:22px;height:18px;background:inherit;-webkit-mask:var(--tail-l) no-repeat center/100% 100%;mask:var(--tail-l) no-repeat center/100% 100%}
+.prose blockquote{position:relative;background:var(--stone);border-radius:var(--r) var(--r) var(--r) 0;padding:20px 24px;margin:1.6em 0 1.6em 14px;font-size:20px;font-weight:600;line-height:1.5;color:var(--graphite)}
+.prose blockquote::after{content:"";position:absolute;bottom:0;left:-14px;width:25px;height:18px;background:inherit;-webkit-mask:var(--tail-l) no-repeat center/100% 100%;mask:var(--tail-l) no-repeat center/100% 100%}
 .prose ul,.prose ol{padding-left:1.3em;margin:0 0 1.1em}
 .prose li{font-size:19px;line-height:1.7;margin-bottom:.35em}
 .prose a{color:var(--red);text-underline-offset:3px}

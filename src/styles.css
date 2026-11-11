@@ -15,8 +15,9 @@
   --wrap:1240px;
   --gut:clamp(16px,4vw,40px);
   /* хвостик репліки (як у логотипі): маска, колір береться з фону елемента */
-  --tail-l:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 20'%3E%3Cpath d='M24 0V20H0C8 19.6 16.8 15.5 16.8 5V0Z'/%3E%3C/svg%3E");
-  --tail-r:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 20'%3E%3Cpath d='M0 0V20H24C16 19.6 7.2 15.5 7.2 5V0Z'/%3E%3C/svg%3E");
+  /* хвостик репліки — точна форма з логотипу (контур облачка CRIMEA), колір береться з фону елемента */
+  --tail:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34.6 30.69'%3E%3Cpath d='M20.56 0C20.56 17.62 13.23 29.49 0 29.49C0 29.49 17.52 30.68 32.63 23.76L34.6 0Z'/%3E%3C/svg%3E");
+  --tail-l:var(--tail);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:84px}
@@ -36,10 +37,11 @@ h1,h2{font-weight:800;text-transform:uppercase;letter-spacing:-.01em;overflow-wr
 h2{font-size:clamp(26px,3.4vw,40px);line-height:1.1}
 
 /* Репліка: плашка з хвостиком. .bubble — графітова зліва (CRIMEA), .bubble.red — червона справа (VOX) */
-.bubble{position:relative;display:inline-block;background:var(--graphite);color:#fff;padding:.12em .5em .16em;border-radius:.32em}
-.bubble::after{content:"";position:absolute;bottom:0;left:-.42em;width:.6em;height:.5em;background:inherit;-webkit-mask:var(--tail-l) no-repeat center/100% 100%;mask:var(--tail-l) no-repeat center/100% 100%}
+.bubble{--bh:1.38em;position:relative;display:inline-block;background:var(--graphite);color:#fff;padding:.12em .5em .16em;line-height:1.1;border-radius:calc(var(--bh)*.401)}
+/* Пропорції як у логотипі: хвостик = 41.75% висоти плашки, виступає на 28% висоти, кінчик трохи нижче краю */
+.bubble::after,.sec-head h2::after{content:"";position:absolute;left:0;bottom:0;height:41.75%;aspect-ratio:34.6/30.69;background:inherit;-webkit-mask:var(--tail) no-repeat 0 0/100% 100%;mask:var(--tail) no-repeat 0 0/100% 100%;transform:translate(-59.42%,3.88%);pointer-events:none}
 .bubble.red{background:var(--red)}
-.bubble.red::after{left:auto;right:-.42em;-webkit-mask-image:var(--tail-r);mask-image:var(--tail-r)}
+.bubble.red::after{left:auto;right:0;transform:translate(59.42%,3.88%) scaleX(-1)}
 
 /* Кнопки */
 .btn{display:inline-flex;align-items:center;justify-content:center;font:700 15px var(--font);text-decoration:none;padding:13px 22px;border:2px solid var(--red);border-radius:12px;background:var(--red);color:#fff;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
@@ -76,8 +78,8 @@ section.tight{padding-top:clamp(32px,4vw,48px)}
 .band{background:var(--stone)}
 .sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:clamp(24px,3vw,36px);flex-wrap:wrap}
 /* Заголовки розділів — графітові репліки */
-.sec-head h2{position:relative;display:inline-block;background:var(--graphite);color:#fff;padding:.12em .5em .16em;border-radius:.32em;margin-left:.42em}
-.sec-head h2::after{content:"";position:absolute;bottom:0;left:-.42em;width:.6em;height:.5em;background:inherit;-webkit-mask:var(--tail-l) no-repeat center/100% 100%;mask:var(--tail-l) no-repeat center/100% 100%}
+.sec-head h2{--bh:1.38em;position:relative;display:inline-block;background:var(--graphite);color:#fff;padding:.12em .5em .16em;line-height:1.1;border-radius:calc(var(--bh)*.401);margin-left:.42em}
+
 .see-all{font-weight:700;font-size:15px;text-decoration:none;color:var(--red);padding-bottom:2px;border-bottom:2px solid currentColor}
 .see-all:hover{color:var(--red-dark)}
 .sub-h{font-size:clamp(20px,2.2vw,26px);margin-bottom:22px}
@@ -87,11 +89,13 @@ section.tight{padding-top:clamp(32px,4vw,48px)}
 
 /* Перший екран на всю висоту вікна: дві репліки, як у логотипі; новини — після прокрутки */
 .hero{min-height:calc(100svh - 76px);display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,6vw,80px) 0 0;background:linear-gradient(180deg,var(--paper) 0,var(--paper) 55%,var(--stone) 100%)}
-.hero-in{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(28px,4vw,48px);width:100%}
-.hero h1{font-size:clamp(30px,6.4vw,96px);line-height:1;letter-spacing:-.015em;display:flex;flex-direction:column;align-items:flex-start;gap:.14em}
-.hero h1 .bubble{padding:.08em .38em .14em;border-radius:.24em}
+.hero-in{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(28px,4vw,48px);width:100%;container-type:inline-size}
+/* розмір від ширини блока (cqw), щоб обидві репліки завжди вміщались у рядок */
+.hero h1{font-size:clamp(24px,5.4vw,84px);font-size:clamp(22px,7.9cqw,96px);line-height:1;letter-spacing:-.015em;display:flex;flex-direction:column;align-items:flex-start;gap:.14em}
+.hero h1 .bubble{--bh:1.22em;padding:.08em .38em .14em;line-height:1}
+
 .hero h1 .bubble:first-child{margin-left:.42em}
-.hero h1 .bubble.red{margin-left:clamp(.8em,7vw,2em)}
+.hero h1 .bubble.red{margin-left:1.4em}
 .hero-foot{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 40px;align-items:end}
 .hero-foot p{font-size:clamp(16px,1.4vw,19px);line-height:1.6;max-width:50ch;color:var(--mute)}
 .cta{display:flex;gap:12px;flex-wrap:wrap}
