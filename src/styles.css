@@ -72,7 +72,7 @@ h2{font-size:clamp(26px,3.4vw,40px);line-height:1.1}
 /* Секції */
 section{padding:clamp(56px,8vw,96px) 0}
 section.tight{padding-top:clamp(32px,4vw,48px)}
-.hero + section{padding-top:clamp(24px,3vw,40px)}
+.hero + section{padding-top:clamp(40px,5vw,64px)}
 .band{background:var(--stone)}
 .sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:clamp(24px,3vw,36px);flex-wrap:wrap}
 /* Заголовки розділів — графітові репліки */
@@ -85,21 +85,33 @@ section.tight{padding-top:clamp(32px,4vw,48px)}
 .empty{color:var(--mute);padding:28px;background:var(--stone);border-radius:var(--r)}
 .band .empty{background:var(--paper)}
 
-/* Перший екран: дві репліки, як у логотипі. Компактний, щоб новини було видно одразу */
-.hero{padding:clamp(28px,4vw,56px) 0 clamp(20px,2.5vw,32px)}
-.hero-in{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(32px,4vw,64px);align-items:end}
-.hero h1{font-size:clamp(26px,4.4vw,64px);line-height:1;letter-spacing:-.015em;display:flex;flex-direction:column;align-items:flex-start;gap:.14em}
+/* Перший екран на всю висоту вікна: дві репліки, як у логотипі; новини — після прокрутки */
+.hero{min-height:calc(100svh - 76px);display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,6vw,80px) 0 0;background:linear-gradient(180deg,var(--paper) 0,var(--paper) 55%,var(--stone) 100%)}
+.hero-in{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(28px,4vw,48px);width:100%}
+.hero h1{font-size:clamp(30px,6.4vw,96px);line-height:1;letter-spacing:-.015em;display:flex;flex-direction:column;align-items:flex-start;gap:.14em}
 .hero h1 .bubble{padding:.08em .38em .14em;border-radius:.24em}
 .hero h1 .bubble:first-child{margin-left:.42em}
-.hero h1 .bubble.red{margin-left:1.2em}
-.hero-foot{display:flex;flex-direction:column;gap:20px;padding-bottom:.2em}
-.hero-foot p{font-size:clamp(15px,1.25vw,17px);line-height:1.6;max-width:44ch;color:var(--mute)}
+.hero h1 .bubble.red{margin-left:clamp(.8em,7vw,2em)}
+.hero-foot{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 40px;align-items:end}
+.hero-foot p{font-size:clamp(16px,1.4vw,19px);line-height:1.6;max-width:50ch;color:var(--mute)}
 .cta{display:flex;gap:12px;flex-wrap:wrap}
-@media (max-width:1000px){
-  .hero-in{grid-template-columns:1fr;gap:24px}
-  .hero h1{font-size:clamp(26px,7vw,60px)}
+.hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;width:100%;padding-top:clamp(32px,5vw,56px);padding-bottom:clamp(20px,3vw,32px);border-bottom:1px solid var(--line)}
+.occupation{display:flex;flex-direction:column;gap:2px}
+.occupation-label{font-size:14px;font-weight:700;color:var(--mute)}
+.occupation-num{font:800 clamp(32px,4vw,56px)/1 var(--font);color:var(--red);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.occupation-num small{font-size:.42em;font-weight:700;color:var(--graphite);letter-spacing:0}
+.scroll-cue{font:700 15px var(--font);color:var(--graphite);background:none;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:10px;padding:8px 0}
+.scroll-cue span{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--graphite);color:#fff;font-size:18px;animation:cue 2.2s ease-in-out infinite}
+.scroll-cue:hover{color:var(--red)}
+.scroll-cue:hover span{background:var(--red)}
+@keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@media (prefers-reduced-motion:reduce){.scroll-cue span{animation:none}}
+@media (max-width:860px){.hero{min-height:calc(100svh - 64px)}}
+@media (max-width:720px){
+  .hero-foot{grid-template-columns:1fr}
+  .hero h1 .bubble.red{margin-left:.6em}
+  .scroll-cue{font-size:0;gap:0}
 }
-@media (max-width:720px){.hero h1 .bubble.red{margin-left:.6em}}
 
 /* Шапка сторінки розділу */
 .page-head{padding:clamp(44px,6vw,88px) 0 0}

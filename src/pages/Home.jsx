@@ -8,6 +8,24 @@ import { videos } from '../youtube'
 import { VideoCard, Player, usePlayer } from '../components/Video'
 import '../video.css'
 
+// Скільки днів триває окупація Криму (з 20 лютого 2014 — дата, визначена законом України)
+const OCCUPATION_START = new Date(2014, 1, 20)
+const daysWord = (n) => {
+  const a = n % 10, b = n % 100
+  if (a === 1 && b !== 11) return 'день'
+  if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return 'дні'
+  return 'днів'
+}
+function OccupationDays() {
+  const days = Math.floor((Date.now() - OCCUPATION_START) / 86400000)
+  return (
+    <p className="occupation">
+      <span className="occupation-label">Крим в окупації</span>
+      <span className="occupation-num">{days.toLocaleString('uk-UA')} <small>{daysWord(days)}</small></span>
+    </p>
+  )
+}
+
 export default function Home() {
   const { news, events, blogs, status } = useContent()
   const latest = news.slice(0, 5)
@@ -28,9 +46,15 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <div className="wrap hero-bottom">
+          <OccupationDays />
+          <button className="scroll-cue" onClick={() => document.getElementById('home-news')?.scrollIntoView({ behavior: 'smooth' })}>
+            Гортайте до новин <span aria-hidden="true">↓</span>
+          </button>
+        </div>
       </section>
 
-      <section>
+      <section id="home-news">
         <div className="wrap">
           <div className="sec-head">
             <h2>Новини</h2>
