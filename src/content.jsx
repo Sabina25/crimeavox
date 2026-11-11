@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { cmsEnabled, fetchContent } from './cms'
 import { staticContent, demoContent } from './data'
 
-const byDateDesc = (a, b) => b.date.localeCompare(a.date)
+const byDateDesc = (a, b) => String(b.date || '').localeCompare(String(a.date || ''))
 const count = (c) => c.news.length + c.events.length + c.blogs.length
 
 function merge(cms) {
@@ -21,7 +21,7 @@ function merge(cms) {
 }
 
 // Останні завантажені дані зберігаємо в браузері, щоб при повторному візиті сайт відкривався миттєво
-const CACHE_KEY = 'cv-content-v1'
+const CACHE_KEY = 'cv-content-v2' // нова версія — старі збережені копії в браузерах ігноруються
 function readCache() {
   try { return JSON.parse(localStorage.getItem(CACHE_KEY)) } catch { return null }
 }
