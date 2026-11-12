@@ -12,8 +12,11 @@ const NAV = [
 // Логотипи з брендбуку (public/brand). BASE_URL — щоб працювало і на github.io/crimeavox, і на своєму домені
 const asset = (p) => `${import.meta.env.BASE_URL}${p}`
 
-export function Logo({ dark, className }) {
-  return <img className={className} src={asset(dark ? 'brand/logo-dark.svg' : 'brand/logo-light.svg')} alt="CrimeaVox" width="290" height="101" />
+// Круглий логотип з брендбуку (public/brand/badge.svg).
+// Інші варіанти там же: badge-red.svg (червоний круг), badge-black.svg (чорний), badge-alt.svg,
+// а також горизонтальні logo-light.svg / logo-dark.svg — щоб змінити, достатньо поміняти назву файлу тут.
+export function Logo({ className }) {
+  return <img className={className} src={asset('brand/badge.svg')} alt="CrimeaVox" width="56" height="56" />
 }
 
 function Header() {
@@ -77,7 +80,7 @@ function Footer() {
       <div className="wrap">
         <div className="f-top">
           <div>
-            <Logo dark className="f-logo" />
+            <Logo className="f-logo" />
             <p>Голос Криму, який не затихає.</p>
           </div>
           <div>
