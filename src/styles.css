@@ -304,3 +304,6 @@ section.tight{padding-top:clamp(32px,4vw,48px)}
   .col.feature{flex-direction:column;align-items:flex-start;gap:18px}
   .col.feature .avatar{width:120px;height:120px}
 }
+
+/* Головна, телефон: у подіях без опису — лише дата, тип, назва, місце */
+@media (max-width:760px){.home-ev .ev p{display:none}}

@@ -76,7 +76,7 @@ export default function Home() {
             <Link className="see-all" to="/events">Усі події</Link>
           </div>
           {upcoming.length
-            ? <div className="ev-list">{upcoming.map(e => <EventRow key={e.slug} item={e} />)}</div>
+            ? <div className="ev-list home-ev">{upcoming.map(e => <EventRow key={e.slug} item={e} />)}</div>
             : <Status status={status} empty text="Нових подій поки немає. Стежте за анонсами в Instagram." />}
         </div>
       </section>
