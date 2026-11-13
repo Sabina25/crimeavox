@@ -16,7 +16,7 @@ const asset = (p) => `${import.meta.env.BASE_URL}${p}`
 // Інші варіанти там же: badge-red.svg (червоний круг), badge-black.svg (чорний), badge-alt.svg,
 // а також горизонтальні logo-light.svg / logo-dark.svg — щоб змінити, достатньо поміняти назву файлу тут.
 export function Logo({ className }) {
-  return <img className={className} src={asset('brand/badge.svg')} alt="CrimeaVox" width="56" height="56" />
+  return <img className={className} src={asset('brand/badge-red.svg')} alt="CrimeaVox" width="56" height="56" />
 }
 
 function Header() {
