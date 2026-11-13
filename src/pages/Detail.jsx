@@ -49,7 +49,7 @@ export function NewsArticle() {
         <div className="wrap">
           <Link className="crumb" to={`/news?r=${item.rubric}`}>{NEWS_RUBRICS[item.rubric]}</Link>
           <h1><Headline item={item} /></h1>
-          {item.lead && <p className="art-lead">{item.lead}</p>}
+          {/* {item.lead && <p className="art-lead">{item.lead}</p>} */}
           <time dateTime={item.date}>{fmtDate(item.date)}</time>
         </div>
       </header>

@@ -8,10 +8,19 @@ export function Media({ item, className = '' }) {
     : <div className={`ph tone-${item.tone || 'a'} ${className}`} />
 }
 
+// Заголовок з червоною плашкою.
+// Якщо текст «Виділити червоним» вже є в заголовку — підсвічуємо його на місці (без повтору),
+// якщо ні — додаємо плашку в кінець заголовка.
 export function Headline({ item }) {
+  const title = (item.title || '').trim()
+  const accent = (item.accent || '').trim()
+  if (!accent) return <>{title}</>
+  const norm = (t) => t.toLowerCase().replace(/[’'ʼ]/g, "'")
+  const at = norm(title).indexOf(norm(accent))
+  if (at === -1) return <>{title} <span className="plate">{accent}</span></>
   return (
     <>
-      {item.title}{item.accent && <> <span className="plate">{item.accent}</span></>}
+      {title.slice(0, at)}<span className="plate">{title.slice(at, at + accent.length)}</span>{title.slice(at + accent.length)}
     </>
   )
 }
@@ -22,7 +31,7 @@ export function NewsCard({ item, size }) {
       <Media item={item} />
       <div className="rub">{NEWS_RUBRICS[item.rubric]}</div>
       <h3><Headline item={item} /></h3>
-      {/* {item.lead && <p>{item.lead}</p>} */}
+      {item.lead && <p>{item.lead}</p>}
       <time dateTime={item.date}>{fmtDate(item.date)}</time>
     </Link>
   )

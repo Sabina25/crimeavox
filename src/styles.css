@@ -147,10 +147,10 @@ section.tight{padding-top:clamp(32px,4vw,48px)}
 .card .ph{transition:transform .4s}
 .card:hover .ph{transform:scale(1.03)}
 .card .rub{align-self:flex-start;font-size:12px;font-weight:700;letter-spacing:.02em;background:rgba(255,255,255,.16);padding:4px 10px;border-radius:999px;margin-bottom:14px}
-.card h3{font:800 clamp(18px,1.7vw,22px)/1.18 var(--font);text-transform:uppercase;letter-spacing:-.005em;overflow-wrap:anywhere}
-.card.lead h3{font-size:clamp(24px,3vw,40px);line-height:1.1}
+.card h3{font:800 clamp(16px,1.3vw,19px)/1.22 var(--font);text-transform:uppercase;letter-spacing:-.005em;overflow-wrap:anywhere}
+.card.lead h3{font-size:clamp(21px,2.3vw,32px);line-height:1.15}
 .card h3 .plate{line-height:1.35}
-.card p{font-size:15px;line-height:1.5;margin-top:12px;opacity:.88;max-width:52ch}
+.card p{font-size:14px;line-height:1.5;margin-top:10px;opacity:.88;max-width:52ch;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .card time{font-size:13px;opacity:.65;margin-top:14px}
 .card:hover h3{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
 /* Добиваємо останній ряд, щоб не було дірок */
