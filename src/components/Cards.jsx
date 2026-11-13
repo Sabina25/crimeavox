@@ -22,7 +22,7 @@ export function NewsCard({ item, size }) {
       <Media item={item} />
       <div className="rub">{NEWS_RUBRICS[item.rubric]}</div>
       <h3><Headline item={item} /></h3>
-      {item.lead && <p>{item.lead}</p>}
+      {/* {item.lead && <p>{item.lead}</p>} */}
       <time dateTime={item.date}>{fmtDate(item.date)}</time>
     </Link>
   )
