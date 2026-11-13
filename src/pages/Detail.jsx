@@ -80,7 +80,7 @@ export function EventDetail() {
         <div className="wrap">
           <Link className="crumb" to="/events">{item.type}</Link>
           <h1>{item.title}</h1>
-          {item.lead && <p className="art-lead">{item.lead}</p>}
+          {/* {item.lead && <p className="art-lead">{item.lead}</p>} */}
         </div>
       </header>
       <div className="wrap ev-detail">
